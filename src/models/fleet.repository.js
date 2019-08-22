@@ -5,11 +5,19 @@ const schemaDefinition = {
     type: String,
     enum: ['ATTACKER', 'DEFENDER'],
   },
-  model: String,
+  status: {
+    type: String,
+    enum: ['AVAILABLE', 'ACTIVE'],
+  },
+  direction: {
+    type: String,
+    enum: ['VERTICAL', 'HORIZONTAL'],
+  },
+  type: String,
   length: Number,
   coordinate: {
-      X: String,
-      Y: String,
+      X: Number,
+      Y: Number,
   },
 }
 
