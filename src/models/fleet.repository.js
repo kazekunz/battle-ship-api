@@ -1,10 +1,6 @@
 import RepositoryBuilder from 'sendit-mongoose-repository'
 
 const schemaDefinition = {
-  team: {
-    type: String,
-    enum: ['ATTACKER', 'DEFENDER'],
-  },
   status: {
     type: String,
     enum: ['AVAILABLE', 'ACTIVE'],
@@ -15,10 +11,11 @@ const schemaDefinition = {
   },
   type: String,
   length: Number,
-  coordinate: {
+  coordinate: [{
       X: Number,
       Y: Number,
-  },
+  }],
+  health: Number,
 }
 
 export const builder = RepositoryBuilder('Fleet', schemaDefinition)
