@@ -13,4 +13,16 @@ export const resetToInitial = async () => {
         direction: 'setup',
         status: 'AVAILABLE',
     })
+    await attackerRepository.model.updateMany({}, {
+        status: 'SETUP',
+        attackCoordinate: [],
+        attackCount: 0,
+      })
+      await battlefieldRepository.model.updateMany({}, {
+          status: 'AVAILABLE',
+          owner: null,
+      })
+    return {
+        message: 'reset successfully',
+    }
 }
