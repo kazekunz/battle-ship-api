@@ -7,7 +7,7 @@ const schemaDefinition = {
   },
   direction: {
     type: String,
-    enum: ['VERTICAL', 'HORIZONTAL'],
+    enum: ['vertically', 'horizontally', 'setup'],
   },
   type: String,
   length: Number,
@@ -15,6 +15,10 @@ const schemaDefinition = {
       x: Number,
       y: Number,
   }],
+  aroundCoordinate: [{
+    x: Number,
+    y: Number,
+}],
   health: Number,
 }
 
