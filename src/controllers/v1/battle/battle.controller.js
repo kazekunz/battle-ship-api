@@ -1,5 +1,5 @@
 import { HttpMethod, route } from '@spksoft/koa-decorator'
-import { placedShip } from './domain/battle.access'
+import { attack } from './domain/battle.access'
 
 @route('/v1/battle')
 export default class BattleController {
@@ -11,9 +11,9 @@ export default class BattleController {
     }
   }
 
-  @route('/place', HttpMethod.PUT)
-  async place (ctx) {
-    const { body } = ctx.request
-    ctx.body = await placedShip(body)
+  @route('/attack', HttpMethod.POST)
+  async attack (ctx) {
+    const { x, y } = ctx.request.body
+    ctx.body = await attack({x, y})
   }
 }
