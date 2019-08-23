@@ -12,8 +12,8 @@ const schemaDefinition = {
   type: String,
   length: Number,
   coordinate: [{
-      X: Number,
-      Y: Number,
+      x: Number,
+      y: Number,
   }],
   health: Number,
 }

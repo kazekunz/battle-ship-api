@@ -4,7 +4,11 @@ import battlefieldRepository from '../../../../models/battlefield.repository'
 mongoose.set('debug', true)
 
 export const placedShip = async body => {
-    const { X, Y, type } = body
-    const battlefield = await battlefieldRepository.findOne({ coordinate: {X, Y} })
-    return battlefield
+    return await checkSpace(body)
+}
+
+const checkSpace = async body => {
+    const { x, y, type, direction } = body
+    const fleet = await fleetRepository.find({coordinate: {X, Y}, status: 'AVAILABLE'})
+    return fleet
 }

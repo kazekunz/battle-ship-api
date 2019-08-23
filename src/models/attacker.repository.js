@@ -5,6 +5,10 @@ const schemaDefinition = {
     type: String,
     enum: ['SETUP', 'PLAYING'],
   },
+  attackCoordinate: [{
+    x: Number,
+    y: Number,
+  }],
   attackCount: Number,
 }
 

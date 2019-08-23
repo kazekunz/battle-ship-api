@@ -14,7 +14,7 @@ export default class HelloWorldController {
   @route('/', HttpMethod.POST)
   async create (ctx) {
     ctx.body = {
-      result: 'Battle field already created',
+      result: await createBattlefield(),
     }
   }
 }

@@ -8,8 +8,8 @@ const schemaDefinition = {
     enum: ['AVAILABLE', 'ACTIVE'],
   },
   coordinate: {
-      X: Number,
-      Y: Number,
+      x: Number,
+      y: Number,
   },
   owner: { type: mongoose.Schema.Types.ObjectId, ref: 'Fleet' },
 }
