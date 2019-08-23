@@ -1,8 +1,8 @@
 import { HttpMethod, route } from '@spksoft/koa-decorator'
-import { createShip } from './domain/fleet.access'
+import { createShip, placedShip } from './domain/fleet.access'
 
 @route('/v1/fleet')
-export default class HelloWorldController {
+export default class FleetController {
   @route('/', HttpMethod.GET)
   async get (ctx) {
     ctx.body = {
@@ -12,8 +12,14 @@ export default class HelloWorldController {
   }
 
   @route('/', HttpMethod.POST)
-  async place (ctx) {
+  async create (ctx) {
     const { body } = ctx.request
     ctx.body = await createShip(body)
+  }
+
+  @route('/place', HttpMethod.PUT)
+  async place (ctx) {
+    const { body } = ctx.request
+    ctx.body = await placedShip(body)
   }
 }

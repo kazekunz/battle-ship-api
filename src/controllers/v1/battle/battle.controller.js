@@ -2,7 +2,7 @@ import { HttpMethod, route } from '@spksoft/koa-decorator'
 import { placedShip } from './domain/battle.access'
 
 @route('/v1/battle')
-export default class HelloWorldController {
+export default class BattleController {
   @route('/', HttpMethod.GET)
   async get (ctx) {
     ctx.body = {

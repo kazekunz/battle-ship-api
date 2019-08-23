@@ -2,7 +2,7 @@ import { HttpMethod, route } from '@spksoft/koa-decorator'
 import { getBattlefield, createBattlefield } from './domain/battlefield.access'
 
 @route('/v1/battlefield')
-export default class HelloWorldController {
+export default class BattlefieldController {
   @route('/', HttpMethod.GET)
   async get (ctx) {
     ctx.body = {
