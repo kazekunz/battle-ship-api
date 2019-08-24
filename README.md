@@ -88,7 +88,7 @@ PUT /v1/fleet/place
 
 ## Reset to initial
 ```
-POST /v1/game/reset
+PUT /v1/game/reset
 ```
 *response*
 ```json
