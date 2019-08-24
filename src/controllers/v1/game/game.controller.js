@@ -1,14 +1,11 @@
 import { HttpMethod, route } from '@spksoft/koa-decorator'
-import { resetToInitial } from './domain/game.access'
+import { resetToInitial, getCurrentState } from './domain/game.access'
 
 @route('/v1/game')
 export default class GameController {
   @route('/', HttpMethod.GET)
   async get (ctx) {
-    ctx.body = {
-      battlefield: true,
-      result: true,
-    }
+    ctx.body = await getCurrentState()
   }
 
   @route('/reset', HttpMethod.PUT)

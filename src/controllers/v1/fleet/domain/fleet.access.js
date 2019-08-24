@@ -33,7 +33,7 @@ export const placedShip = async body => {
 const findCurrentPosition = (x, y, direction, length) => {
     let currentPosition = []
     if ((direction === 'horizontally' && x + length > 10) || (direction === 'vertically' && y - length < 0)) throw new BadRequestError('Ship placement does not allow!')
-    if (direction === 'horizontally' && x + length <= 10 && length > 1) {
+    if (direction === 'horizontally' && x + length <= 10 && length > 0) {
         for (let i = 0; i <= length; i++) {
             currentPosition.push({
                 x: x + i,
@@ -41,7 +41,7 @@ const findCurrentPosition = (x, y, direction, length) => {
             })
         }
     }
-    if (direction === 'vertically' && y - length >= 0 && length > 1) {
+    if (direction === 'vertically' && y - length >= 0 && length > 0) {
         for (let i = 0; i <= length; i++) {
             currentPosition.push({
                 x: x,
@@ -214,8 +214,7 @@ const placedShipInBattleField = async (currentPositions, aroundPositions, direct
 }
 
 const updateBattleField = async (currentPositions, x, y, ship) => await Promise.all(currentPositions.map(async position => {
-    ship.toObject()
+    ship && ship.toObject()
     const update = await battlefieldRepository.update({ 'coordinate.x': position.x, 'coordinate.y': position.y }, { owner: ship._id, status: 'ACTIVE' })
     return update
 }))
-
