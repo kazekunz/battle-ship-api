@@ -6,6 +6,12 @@ export const getBattlefield = async () => {
 }
 
 export const createBattlefield = async () => {
+    const battlefield = await battlefieldRepository.find({})
+    if (battlefield.data.length) {
+        return {
+            message: 'Battlefield is already created',
+        }
+    }
     for (let i = 1; i <= 10; i++) {
         for (let j = 1; j <= 10; j++) {
             await battlefieldRepository.create({
@@ -20,6 +26,6 @@ export const createBattlefield = async () => {
         }
     }
     return {
-        create: 'success',
+        message: 'create success',
     }
 }
