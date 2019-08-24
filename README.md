@@ -51,7 +51,7 @@ PUT /v1/fleet/place
 ```json
 {
 	"type": "Battleship",
-	"direction": "horizontally",
+	"direction": "horizontally", // or vertically
 	"x": 1,
 	"y": 7
 }
@@ -96,3 +96,10 @@ POST /v1/game/reset
     }
 }
 ```
+
+## .ENV
+```
+DB_URI=mongodb://<user>:<password@url:port/database
+```
+
+postman: https://www.getpostman.com/collections/fb47c4ffda4117b20d5a
