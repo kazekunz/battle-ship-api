@@ -1,5 +1,9 @@
 # Battle ship API
 
+```
+npm run start-dev
+```
+
 **Game Rules:**
 
 The game starts with a fleet (1x battleship, 2x cruisers, 3x destroyers, 4x submarines) and an empty
