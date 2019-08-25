@@ -1,5 +1,6 @@
 /* eslint-disable no-return-await */
 import mongoose from 'mongoose'
+import { flatten } from 'lodash'
 import fleetRepository from '../../../../models/fleet.repository'
 import battlefieldRepository from '../../../../models/battlefield.repository'
 import BadRequestError from '../../../../libraries/error/bad-request-error'
@@ -15,10 +16,10 @@ const fleetConfig = config.fleet
 export const placedShip = async body => {
     const { x, y, type, direction } = body
     const getConfig = fleetConfig[type]
-    const fleets = await fleetRepository.find({ status: 'AVAILABLE', type })
-    if (!fleets.data.length) throw new BadRequestError('All of this type already placed.')
-    if (!getConfig) throw new BadRequestError('Wrong type.')
-    const ship = fleets.data[0]
+    if (!getConfig) {
+        throw new BadRequestError('Wrong type.')
+    }
+    const ship = await getShip({ status: 'AVAILABLE', type })
     const currentPositions = findCurrentPosition(x, y, direction, getConfig.length - 1)
     const aroundPositions = findAroundPosition(currentPositions, direction, getConfig.length)
     await isOverlap(currentPositions, aroundPositions)
@@ -30,7 +31,13 @@ export const placedShip = async body => {
     }
 }
 
-const findCurrentPosition = (x, y, direction, length) => {
+export const getShip = async ({ status, type }) => {
+    const fleets = await fleetRepository.find({ status: 'AVAILABLE', type })
+    if (!fleets.data.length) throw new BadRequestError('All of this type already placed.')
+    return fleets.data[0]
+}
+
+export const findCurrentPosition = (x, y, direction, length) => {
     let currentPosition = []
     if ((direction === 'horizontally' && x + length > 10) || (direction === 'vertically' && y - length < 0)) throw new BadRequestError('Ship placement does not allow!')
     if (direction === 'horizontally' && x + length <= 10 && length > 0) {
@@ -58,7 +65,7 @@ const findCurrentPosition = (x, y, direction, length) => {
     return currentPosition
 }
 
-const findAroundPosition = (positions, direction, length) => positions.flatMap((position, index) => {
+export const findAroundPosition = (positions, direction, length) => flatten(positions.map((position, index) => {
     if (length === 1) {
         return [{
             x: position.x - 1,
@@ -196,9 +203,9 @@ const findAroundPosition = (positions, direction, length) => positions.flatMap((
             y: position.y - 1,
         }]
     }
-})
+}))
 
-const isOverlap = async (currentPositions, aroundPositions) => {
+export const isOverlap = async (currentPositions, aroundPositions) => {
     const checkArea = [...currentPositions, ...aroundPositions]
     const checkPositionOverlap = (await Promise.all(checkArea.map(async position => {
         const data = (await fleetRepository.find({ 'coordinate.x': position.x, 'coordinate.y': position.y })).data
@@ -209,7 +216,7 @@ const isOverlap = async (currentPositions, aroundPositions) => {
 }
 
 const placedShipInBattleField = async (currentPositions, aroundPositions, direction, type, ship) => {
-    const placedShip = await fleetRepository.update({ _id: ship._id, type, status: 'AVAILABLE' }, { status: 'ACTIVE', coordinate: currentPositions, direction, aroundCoordinate: aroundPositions })
+    const placedShip = await fleetRepository.update({ _id: ship._id, type, status: 'AVAILABLE' }, { status: 'ACTIVE', coordinate: currentPositions, direction, aroundCoordinate: aroundPositions, health: ship['length'] })
     return placedShip
 }
 
