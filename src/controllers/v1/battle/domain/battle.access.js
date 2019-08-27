@@ -1,10 +1,7 @@
 /* eslint-disable no-return-await */
-import mongoose from 'mongoose'
 import fleetRepository from '../../../../models/fleet.repository'
 import attackerRepository from '../../../../models/attacker.repository'
 import { BadRequestError, UnauthorizedError } from '../../../../libraries/error/'
-
-mongoose.set('debug', true)
 
 export const attack = async({x, y}) => {
     await isPlacedAllShip()
@@ -23,7 +20,7 @@ const isPlacedAllShip = async () => {
 
 const attackShip = async ({x, y}) => {
     let health, message
-    let { attackCount, miss, hit, limit } = await attackerRepository.findOne({})
+    let { miss, hit, limit } = await attackerRepository.findOne({})
     const fleet = await fleetRepository.findOne({ 'coordinate.x': x, 'coordinate.y': y })
     fleet && fleet.toObject()
     if (fleet) {

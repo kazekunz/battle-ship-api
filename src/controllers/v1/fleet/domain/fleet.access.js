@@ -1,12 +1,9 @@
 /* eslint-disable no-return-await */
-import mongoose from 'mongoose'
 import { flatten } from 'lodash'
 import fleetRepository from '../../../../models/fleet.repository'
 import battlefieldRepository from '../../../../models/battlefield.repository'
 import BadRequestError from '../../../../libraries/error/bad-request-error'
 import config from '../../../../config'
-
-mongoose.set('debug', true)
 
 // eslint-disable-next-line no-return-await
 export const createShip = async body => await fleetRepository.create(body)
