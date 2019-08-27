@@ -1,7 +1,13 @@
 # Battle ship API
 
+### Run project
 ```
 npm run start-dev
+```
+
+### Run test
+```
+npm run test
 ```
 
 **Game Rules:**
