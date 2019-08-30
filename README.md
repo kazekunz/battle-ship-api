@@ -112,4 +112,3 @@ PUT /v1/game/reset
 DB_URI=mongodb://<user>:<password@url:port/database
 ```
 
-postman: https://www.getpostman.com/collections/fb47c4ffda4117b20d5a
